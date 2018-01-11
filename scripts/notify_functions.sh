@@ -21,6 +21,8 @@ if [ $notification = default ]; then
 	fi
 fi
 
+notification=HS
+
 if [ "$5" = alarm ]; then
 	growl_icon="$PWD/resources/icon_alarm.png"
 	nc_icon="$PWD/resources/icon_alarm.icns"
@@ -41,6 +43,15 @@ if [ $notification = growl ]; then
 	end tell
 EOD
 fi
+
+
+if [ $notification = HS ]; then
+	osascript <<EOD
+	say "$2 $4"
+	display notification "$3\n$4" with title "$1" subtitle "$2"
+EOD
+fi
+
 
 if [ $notification = NC ]; then
 	./MountainNotifier/MountainNotifier "$dummy_app" "$2" "$3" "$4" "$nc_icon"
